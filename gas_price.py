@@ -8,7 +8,7 @@ class Gas:
         with open(path, "r") as f:
             config = json.loads(f.read())
 
-        self.dict_prices = self.get_html_for_gas(config.get("gas_url"))
+        self.dict_prices = self.get_html_for_gas(config.get("gas"))
         self.avg_price = self.calculate_average()
 
 
@@ -27,7 +27,7 @@ class Gas:
                 html_text = response.text
 
             gas_prices_soup = BeautifulSoup(html_text, features="html.parser")
-            dates = gas_prices_soup.find_all("div", {"class": "stylelistrow"})
+            dates = gas_prices_soup.find_all("div", {"class": "location"})
             dates = [item.text for item in dates]
             prices = gas_prices_soup.find_all(id=search_for)
             prices = [price.text for price in prices]
